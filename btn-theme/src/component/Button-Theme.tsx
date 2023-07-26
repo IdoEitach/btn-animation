@@ -1,40 +1,79 @@
 import { Button, ButtonGroup } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 type btnProps = {} & Partial<typeof defaultProps>;
 const defaultProps = {
   firstSymbol: "☼",
   secondSymbol: "☽",
+  startingTheme: "light",
+  buttonActiveColorDark: "rgb(53, 5, 50)",
+  buttonActiveColorLight: "rgb(233, 230, 147)",
+  textActiveColorDark: "black",
+  textActiveColorLight: "white",
   containerStyle: {
-    height: "30px",
-    width: "60px",
-    backgroundColor: "black",
+    height: "5%",
+    width: "15%",
+    justifyContent: "center",
   } as React.CSSProperties,
 };
+
 function ButtonTheme(propsIn: btnProps) {
   const props = { ...defaultProps, ...propsIn };
   const [isFirstBtnDis, setFirstBtnDis] = useState(true);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const handleClick = () => {
     setFirstBtnDis(!isFirstBtnDis);
+    setTheme(!isFirstBtnDis ? "light" : "dark");
   };
+
   return (
-    <ButtonGroup>
-      <Button
-        disabled={isFirstBtnDis}
-        onClick={handleClick}
-        variant="contained"
-      >
-        {props.firstSymbol}
-      </Button>
-      <Button
-        disabled={!isFirstBtnDis}
-        onClick={handleClick}
-        variant="contained"
-      >
-        {props.secondSymbol}
-      </Button>
-    </ButtonGroup>
+    <div style={{ height: "100%" }}>
+      <ButtonGroup style={props.containerStyle}>
+        <Button
+          style={{
+            height: "100%",
+            width: "50%",
+            color:
+              theme === "light"
+                ? props.textActiveColorDark
+                : props.textActiveColorLight,
+            backgroundColor: props.buttonActiveColorLight,
+            borderColor:
+              theme === "light"
+                ? props.buttonActiveColorLight
+                : props.buttonActiveColorDark,
+          }}
+          disabled={isFirstBtnDis}
+          onClick={handleClick}
+          variant="contained"
+        >
+          {props.firstSymbol}
+        </Button>
+        <Button
+          style={{
+            height: "100%",
+            width: "50%",
+            backgroundColor: props.buttonActiveColorDark,
+
+            color:
+              theme === "dark"
+                ? props.textActiveColorDark
+                : props.textActiveColorLight,
+            borderColor:
+              theme === "light"
+                ? props.buttonActiveColorDark
+                : props.buttonActiveColorLight,
+          }}
+          disabled={!isFirstBtnDis}
+          onClick={handleClick}
+          variant="contained"
+        >
+          {props.secondSymbol}
+        </Button>
+      </ButtonGroup>
+    </div>
   );
 }
 export default ButtonTheme;
