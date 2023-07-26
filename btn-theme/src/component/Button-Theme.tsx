@@ -1,6 +1,8 @@
 import { Button, ButtonGroup } from "@mui/material";
 import React, { useState, useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import NightsStayIcon from "@mui/icons-material/NightsStay";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 type btnProps = {} & Partial<typeof defaultProps>;
 const defaultProps = {
@@ -9,8 +11,8 @@ const defaultProps = {
   startingTheme: "light",
   buttonActiveColorDark: "rgb(53, 5, 50)",
   buttonActiveColorLight: "rgb(233, 230, 147)",
-  textActiveColorDark: "black",
-  textActiveColorLight: "white",
+  textActiveColorDark: "white",
+  textActiveColorLight: "black",
   containerStyle: {
     height: "5%",
     width: "15%",
@@ -49,14 +51,13 @@ function ButtonTheme(propsIn: btnProps) {
           onClick={handleClick}
           variant="contained"
         >
-          {props.firstSymbol}
+          <LightModeIcon></LightModeIcon>
         </Button>
         <Button
           style={{
             height: "100%",
             width: "50%",
             backgroundColor: props.buttonActiveColorDark,
-
             color:
               theme === "dark"
                 ? props.textActiveColorDark
@@ -70,7 +71,7 @@ function ButtonTheme(propsIn: btnProps) {
           onClick={handleClick}
           variant="contained"
         >
-          {props.secondSymbol}
+          <NightsStayIcon></NightsStayIcon>
         </Button>
       </ButtonGroup>
     </div>
